@@ -15,6 +15,7 @@ var signKey = []byte("notuploadedtogithub")
 var remoteIp = "127.0.0.1"
 var remotePort = "61002"
 
+//Gets alerts and device stats from edge devices
 func getRemoteAlerts() {
 	validToken, err := GenerateJWT()
 	if err != nil {
@@ -39,6 +40,8 @@ func getRemoteAlerts() {
 
 }
 
+//Generates JWT, signed by signKey
+//Returns token on success
 func GenerateJWT() (string, error) {
 	token := jwt.New(jwt.SigningMethodHS256)
 
@@ -58,11 +61,7 @@ func GenerateJWT() (string, error) {
 	return tokenString, nil
 }
 
-func handleCollection() {
-	getRemoteAlerts()
-}
-
 func main() {
 	log.Print("Collecting alerts from " + remoteIp + ":" + remotePort)
-	handleCollection()
+	getRemoteAlerts()
 }
